@@ -116,7 +116,7 @@ Ablation analysis demonstrating that CarbonSlack guarantees **100% SLA complianc
 ### Local Installation
 ```bash
 # 1. Clone repository
-git clone https://github.com/<your-username>/EcoSched.git
+git clone https://github.com/durgesh261/EcoSched.git
 cd EcoSched
 
 # 2. Create virtual environment
@@ -180,11 +180,11 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 If you use EcoSched in your academic research, please cite:
 
 ```bibtex
-@article{ecosched2026,
+@article{kanjariya2026ecosched,
   title={EcoSched: Carbon-Aware Workload Orchestration and Dynamic Slack Shifting for Geo-Distributed Compute Clusters},
-  author={EcoSched Research Project},
+  author={Kanjariya, Durgesh},
   year={2026},
-  journal={arXiv preprint / Technical Report},
-  url={https://github.com/<your-username>/EcoSched}
+  journal={Technical Report and Simulation Framework},
+  url={https://github.com/durgesh261/EcoSched}
 }
 ```

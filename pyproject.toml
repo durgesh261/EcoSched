@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "A Carbon-Aware Workload Orchestrator and Simulation Framework for Geo-Distributed Heterogeneous Compute Clusters"
 readme = "README.md"
 authors = [
-    { name = "EcoSched Research Team", email = "research@ecosched.org" }
+    { name = "Durgesh Kanjariya", email = "durgeshkanjariya10@gmail.com" }
 ]
 license = { text = "MIT" }
 keywords = ["green computing", "carbon-aware", "distributed systems", "cloud computing", "scheduling", "discrete event simulation"]

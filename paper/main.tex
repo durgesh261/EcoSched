@@ -4,6 +4,7 @@
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 \usepackage{graphicx}
+\graphicspath{{figures/}{../figures/}}
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{booktabs}
@@ -19,7 +20,6 @@
 
 \author{\IEEEauthorblockN{Durgesh Kanjariya}
 \IEEEauthorblockA{\textit{Department of Computer Science} \\
-\textit{Independent Research Project for Master's Application} \\
 Email: durgeshkanjariya10@gmail.com}
 }
 
@@ -98,14 +98,14 @@ where $w_c = 0.70$, $w_e = 0.15$, $w_s = 0.15$, and $w_{\text{net}} = 0.05$.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{../figures/fig1_grid_carbon_traces.png}
+\includegraphics[width=\columnwidth]{fig1_grid_carbon_traces.png}
 \caption{Diurnal carbon intensity dynamics across European ENTSO-E (Germany, Sweden, France) and CAISO (California) grids.}
 \label{fig:carbon_traces}
 \end{figure}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=\columnwidth]{../figures/fig4_pareto_carbon_latency.png}
+\includegraphics[width=\columnwidth]{fig4_pareto_carbon_latency.png}
 \caption{Pareto efficiency frontier: Carbon footprint vs. job turnaround latency under nominal workload.}
 \label{fig:pareto}
 \end{figure}
