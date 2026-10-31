@@ -5,8 +5,15 @@
 [![Build Status](https://img.shields.io/badge/tests-5%20passed-brightgreen.svg)]()
 [![Code Style: Academic](https://img.shields.io/badge/code%20style-IEEE%2FACM%20Research-purple.svg)]()
 [![Docker](https://img.shields.io/badge/docker-ready-blue.svg)]()
+[![Digital Twin](https://img.shields.io/badge/Interactive-Digital%20Twin-10b981.svg)](https://durgesh261.github.io/EcoSched/)
 
 > **EcoSched** is an open-source, discrete-event simulation framework and algorithmic orchestrator designed to minimize the operational carbon footprint of geo-distributed, heterogeneous compute clusters while strictly enforcing Service-Level Agreement (SLA) deadlines.
+
+### 🌐 Live Interactive Portal & Research Artifacts
+* **🎮 Interactive Digital Twin & Cluster Simulator:** [https://durgesh261.github.io/EcoSched/](https://durgesh261.github.io/EcoSched/)
+* **📄 Research Paper Manuscript (IEEE Format):** [https://durgesh261.github.io/EcoSched/paper.html](https://durgesh261.github.io/EcoSched/paper.html)
+* **📂 Architecture & Technical Documentation:** [https://durgesh261.github.io/EcoSched/docs.html](https://durgesh261.github.io/EcoSched/docs.html)
+* **🌲 Partner Project (PhysioEarth-Wildfire Digital Twin):** [https://durgesh261.github.io/PhysioEarth-Wildfire/](https://durgesh261.github.io/PhysioEarth-Wildfire/)
 
 ---
 

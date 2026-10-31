@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>EcoSched: Carbon-Aware Cluster Digital Twin & Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="title-area">
+        <h1>
+          EcoSched
+          <span class="badge-tag">Cloud Digital Twin</span>
+          <span class="badge-flag">EU Green Deal & Energiewende</span>
+        </h1>
+        <p class="subtitle">
+          Carbon-Aware Dynamic Workload Orchestration and Slack Shifting for Geo-Distributed Heterogeneous Compute Clusters
+        </p>
+      </div>
+      <div class="header-links">
+        <a href="paper.html" class="btn-link">📄 Read Paper</a>
+        <a href="docs.html" class="btn-link">📂 Docs</a>
+        <a href="https://github.com/durgesh261/EcoSched" class="btn-link" target="_blank" rel="noopener noreferrer">⭐ GitHub</a>
+        <a href="https://durgesh261.github.io/PhysioEarth-Wildfire/" class="btn-link highlight" target="_blank" rel="noopener noreferrer">🌲 PhysioEarth-Wildfire Twin</a>
+      </div>
+    </header>
+
+    <!-- Controls Bar -->
+    <div class="controls-card">
+      <div class="slider-container">
+        <div class="slider-label-row">
+          <span>Simulation Timeline: <strong id="activeStepBadge" class="active-step-badge">T = 0.0 hrs (Step 0)</strong></span>
+          <span>Horizon: 72 Hours (288 Intervals of 15-min ENTSO-E / CAISO Grid Traces)</span>
+        </div>
+        <input type="range" id="timeSlider" class="range-slider" min="0" max="287" value="0" step="1">
+      </div>
+      <div class="controls-actions">
+        <div class="button-group">
+          <button id="prevBtn" class="btn-ctrl">◀ Step</button>
+          <button id="playBtn" class="btn-ctrl primary">▶ Play Simulation</button>
+          <button id="nextBtn" class="btn-ctrl">Step ▶</button>
+          <button id="speedBtn" class="btn-ctrl">1x Speed</button>
+        </div>
+
+        <div class="button-group">
+          <span class="policy-label">Scenario:</span>
+          <select id="scenarioSelect" class="scenario-select">
+            <option value="Nominal_Workload">Nominal Workload (Balanced 600 Tasks)</option>
+            <option value="Tight_SLA_Deadlines">Tight SLA Deadlines (-50% Slack Buffer)</option>
+            <option value="Heavy_Contention">Heavy Contention (2x Arrival Density)</option>
+          </select>
+        </div>
+
+        <div class="button-group">
+          <span class="policy-label">Policy:</span>
+          <button class="btn-ctrl policy-btn active-policy" data-policy="CarbonSlack_Novel">CarbonSlack (Novel)</button>
+          <button class="btn-ctrl policy-btn" data-policy="Spatial_Only_Carbon">Spatial Only</button>
+          <button class="btn-ctrl policy-btn" data-policy="Energy_Greedy_Consolidation">Energy Greedy</button>
+          <button class="btn-ctrl policy-btn" data-policy="FIFO_Default">FIFO (K8s Default)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Live Telemetry HUD -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <span class="metric-title">Cumulative Carbon Footprint</span>
+        <span id="m-carbon" class="metric-value">0.0 kg</span>
+        <span id="m-savings-badge" class="metric-delta delta-good">▼ 12.4% vs FIFO</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-title">Electrical Energy Consumed</span>
+        <span id="m-energy" class="metric-value">0.0 kWh</span>
+        <span class="metric-delta delta-good">SPECpower Calibrated</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-title">SLA Deadline Compliance</span>
+        <span id="m-sla" class="metric-value">100.0%</span>
+        <span id="m-sla-badge" class="metric-delta delta-good">✓ Zero Breaches</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-title">Workload Stream Status</span>
+        <span id="m-tasks" class="metric-value">0 Active / 0 Queued</span>
+        <span class="metric-delta delta-good">Dynamic Slack Triage</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-title">Cluster CPU Utilization</span>
+        <span id="m-cpu" class="metric-value">0.0%</span>
+        <span class="metric-delta delta-good">27 Heterogeneous Nodes</span>
+      </div>
+    </div>
+
+    <!-- Multi-Region Grid Status Cards -->
+    <div class="section-title">
+      <span>⚡ Geo-Distributed Grid Carbon Intensity Signals (ENTSO-E & CAISO)</span>
+    </div>
+    <div class="regions-grid" id="regionsContainer">
+      <!-- Injected dynamically via app.js -->
+    </div>
+
+    <!-- Two-column Layout: Server Racks & Live Telemetry Charts -->
+    <div class="twocol-layout">
+      <!-- Left: Cluster Node Matrix -->
+      <div class="panel-card">
+        <div class="section-title">
+          <span>🖥️ Heterogeneous Cluster Topology (27 Compute Nodes)</span>
+        </div>
+        <p style="font-size:12px; color:var(--text-dim); margin-bottom:12px;">
+          Dynamic power tracking: Active SPECpower non-linear curve <code style="font-family:var(--font-mono); color:var(--accent-green);">P(u) = P_idle + ΔP(2u - u^1.4)</code> vs. Deep Standby Sleep state (<code style="font-family:var(--font-mono); color:var(--text-muted);">15W</code>).
+        </p>
+        <div class="node-grid" id="nodesContainer">
+          <!-- Injected dynamically via app.js -->
+        </div>
+
+        <div class="section-title" style="margin-top:24px;">
+          <span>📡 Real-Time Workload Dispatch & Migration Feed</span>
+        </div>
+        <div class="dispatch-feed" id="dispatchFeed">
+          <!-- Injected dynamically via app.js -->
+        </div>
+      </div>
+
+      <!-- Right: Real-time Charts -->
+      <div class="panel-card">
+        <div class="section-title">
+          <span>📈 Regional Carbon Intensity Waves (gCO₂eq / kWh)</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="gridChart"></canvas>
+        </div>
+
+        <div class="section-title" style="margin-top:24px;">
+          <span>🌱 Cumulative Operational Carbon Comparison (kg CO₂eq)</span>
+        </div>
+        <div class="chart-container">
+          <canvas id="cumChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        <strong>EcoSched</strong> — Designed & Developed by <strong>Durgesh Kanjariya</strong> for Master's in Computer Science Applications.
+      </div>
+      <div class="footer-links">
+        <a href="paper.html">📄 IEEE Paper</a>
+        <a href="docs.html">📂 Architecture Docs</a>
+        <a href="https://github.com/durgesh261/EcoSched" target="_blank">⭐ GitHub Repo</a>
+        <a href="https://durgesh261.github.io/PhysioEarth-Wildfire/" target="_blank">🔥 PhysioEarth Digital Twin</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

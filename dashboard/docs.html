@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>EcoSched: Documentation & Architecture Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .docs-container {
+      max-width: 960px;
+      margin: 40px auto;
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 40px 48px;
+      color: #e2e8f0;
+      line-height: 1.65;
+    }
+    .docs-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-card);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    h1 {
+      font-size: 28px;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 20px;
+      color: var(--accent-green);
+      margin-top: 32px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 6px;
+    }
+    h3 {
+      font-size: 15px;
+      color: var(--accent-cyan);
+      margin-top: 18px;
+      margin-bottom: 8px;
+    }
+    pre {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      overflow-x: auto;
+      color: #f1f5f9;
+      margin: 14px 0;
+    }
+    .highlight-card {
+      background: rgba(16, 185, 129, 0.08);
+      border-left: 3px solid var(--accent-green);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0;
+      font-size: 14px;
+    }
+    ul, ol {
+      margin-left: 24px;
+      margin-bottom: 16px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    code {
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #38bdf8;
+    }
+  </style>
+</head>
+<body>
+  <div class="docs-container">
+    <div class="docs-nav">
+      <a href="index.html" class="btn-link">◀ Back to Digital Twin</a>
+      <div style="display:flex; gap:8px;">
+        <a href="paper.html" class="btn-link">📄 Read Paper</a>
+        <a href="https://github.com/durgesh261/EcoSched" class="btn-link" target="_blank">⭐ GitHub</a>
+        <a href="https://durgesh261.github.io/PhysioEarth-Wildfire/" class="btn-link highlight" target="_blank">🌲 PhysioEarth Twin</a>
+      </div>
+    </div>
+
+    <h1>EcoSched Architecture & Technical Guide</h1>
+    <p style="color:var(--text-muted); font-size:14.5px;">
+      A Carbon-Aware Workload Orchestrator and Simulation Framework for Geo-Distributed Heterogeneous Compute Clusters.
+    </p>
+
+    <div class="highlight-card">
+      <strong>Core Purpose:</strong> EcoSched addresses the fundamental limitation of contemporary cloud orchestrators (Kubernetes, Slurm) which are 100% carbon-blind. By pairing real-time marginal grid carbon signals ($g\text{CO}_2\text{eq}/\text{kWh}$) with remaining execution slack $S_j(t) = D_j - (t + d_j)$, EcoSched unifies temporal deferral with spatial WAN shifting to cut emissions by up to <strong>34.7%</strong> while guaranteeing <strong>100% SLA compliance</strong>.
+    </div>
+
+    <h2>1. System Architecture & Component Design</h2>
+    <p>The system is organized into modular packages under <code>src/</code>:</p>
+    <ul>
+      <li><code>src/core/models.py</code>: Pydantic schemas for tasks, nodes, regions, and lifecycle states.</li>
+      <li><code>src/core/node.py</code>: Models non-linear SPECpower CPU polynomial curves and low-power standby sleep states ($15\text{W}$).</li>
+      <li><code>src/core/task.py</code>: Tracks dynamic execution progress, remaining duration, and slack windows.</li>
+      <li><code>src/core/grid.py</code>: Vectorized NumPy lookup engine for sub-microsecond carbon intensity interpolation and moving-average green valley search.</li>
+      <li><code>src/core/cluster.py</code>: Geo-distributed topology coordinator modeling inter-datacenter WAN latency and bandwidth matrices.</li>
+      <li><code>src/simulator/engine.py</code>: Discrete-Event Simulation (DES) execution loop driving cluster state transitions.</li>
+      <li><code>src/schedulers/</code>: Implements <code>CarbonSlack_Novel</code>, <code>FIFO_Default</code>, <code>Energy_Greedy_Consolidation</code>, and <code>Spatial_Only_Carbon</code>.</li>
+    </ul>
+
+    <h2>2. Mathematical Formulation</h2>
+    <h3>A. Non-Linear SPECpower Server Power Model</h3>
+    <pre>P_n(t) = P_{standby} * PUE_r                   (if u_n = 0 and g_n = 0)
+P_n(t) = [P_{idle} + ΔP(2u - u^1.4) + P_{gpu}] * PUE_r   (if u_n > 0)</pre>
+
+    <h3>B. Dynamic Slack-Window Triage</h3>
+    <pre>S_j(t) = Deadline_j - (CurrentTime_t + Duration_j)
+
+if S_j(t) <= 20 min  ➔  SLA-CRITICAL  ➔  Immediate Placement Guaranteed
+if S_j(t) >  20 min  ➔  ELASTIC       ➔  Green Valley Delay / WAN Migration</pre>
+
+    <h3>C. Inter-Region WAN Latency Matrix</h3>
+    <pre>TransferDelay = RTT(src, dst) + (DataSize_GB * 8) / Bandwidth_Gbps</pre>
+
+    <h2>3. Quickstart & Local Reproduction</h2>
+    <pre><span class="code-comment"># 1. Clone repository</span>
+git clone https://github.com/durgesh261/EcoSched.git
+cd EcoSched
+
+<span class="code-comment"># 2. Set up Python virtual environment</span>
+python -m venv venv
+.\venv\Scripts\activate   <span class="code-comment"># Windows</span>
+source venv/bin/activate  <span class="code-comment"># Linux / macOS</span>
+
+<span class="code-comment"># 3. Install dependencies</span>
+pip install -r requirements.txt
+pip install -e .
+
+<span class="code-comment"># 4. Run Pytest unit & integration test suite</span>
+pytest -v
+
+<span class="code-comment"># 5. Execute full benchmark suite and generate 300 DPI figures</span>
+python scripts/run_experiments.py</pre>
+
+    <h2>4. Docker Reproducibility</h2>
+    <pre><span class="code-comment"># Build Docker container image</span>
+docker build -t ecosched:latest .
+
+<span class="code-comment"># Run benchmark suite inside container</span>
+docker run --rm -v $(pwd)/output:/app/output ecosched:latest</pre>
+
+    <h2>5. Research Portfolio & Cross-Links</h2>
+    <p>This project is part of a dual-project research portfolio for Master's in Computer Science / Data Science applications:</p>
+    <ul>
+      <li><strong>EcoSched (This Project):</strong> Distributed Systems, Green Computing, Cloud Scheduling & Discrete-Event Simulation.
+        <br><a href="index.html" style="color:var(--accent-green);">Live Digital Twin</a> &middot; <a href="paper.html" style="color:var(--accent-cyan);">IEEE Paper</a>
+      </li>
+      <li><strong>PhysioEarth-Wildfire:</strong> Scientific Machine Learning, Physics-Informed Fourier Neural Operator (FNO) for Wildfire Spread.
+        <br><a href="https://durgesh261.github.io/PhysioEarth-Wildfire/" target="_blank" style="color:var(--accent-solar);">Live Digital Twin</a> &middot; <a href="https://durgesh261.github.io/PhysioEarth-Wildfire/paper.html" target="_blank" style="color:var(--accent-cyan);">Research Paper</a>
+      </li>
+    </ul>
+  </div>
+</body>
+</html>
