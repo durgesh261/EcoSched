@@ -547,3 +547,4 @@ function drawCumulativeChart(step, scData) {
     cumCtx.stroke();
   });
 }
+

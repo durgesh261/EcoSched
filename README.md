@@ -13,7 +13,6 @@
 * **🎮 Interactive Digital Twin & Cluster Simulator:** [https://durgesh261.github.io/EcoSched/](https://durgesh261.github.io/EcoSched/)
 * **📄 Research Paper Manuscript (IEEE Format):** [https://durgesh261.github.io/EcoSched/paper.html](https://durgesh261.github.io/EcoSched/paper.html)
 * **📂 Architecture & Technical Documentation:** [https://durgesh261.github.io/EcoSched/docs.html](https://durgesh261.github.io/EcoSched/docs.html)
-* **🌲 Partner Project (PhysioEarth-Wildfire Digital Twin):** [https://durgesh261.github.io/PhysioEarth-Wildfire/](https://durgesh261.github.io/PhysioEarth-Wildfire/)
 
 ---
 
