@@ -39,6 +39,11 @@ data/results/
 output/
 figures/*.pdf
 
+# Private Research Paper Drafts (Kept local, never public on Git)
+paper/
+*.tex
+*.bib
+
 # OS
 .DS_Store
 Thumbs.db

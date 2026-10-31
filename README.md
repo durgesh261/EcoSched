@@ -9,9 +9,8 @@
 
 > **EcoSched** is an open-source, discrete-event simulation framework and algorithmic orchestrator designed to minimize the operational carbon footprint of geo-distributed, heterogeneous compute clusters while strictly enforcing Service-Level Agreement (SLA) deadlines.
 
-### 🌐 Live Interactive Portal & Research Artifacts
+### 🌐 Live Interactive Portal & Artifacts
 * **🎮 Interactive Digital Twin & Cluster Simulator:** [https://durgesh261.github.io/EcoSched/](https://durgesh261.github.io/EcoSched/)
-* **📄 Research Paper Manuscript (IEEE Format):** [https://durgesh261.github.io/EcoSched/paper.html](https://durgesh261.github.io/EcoSched/paper.html)
 * **📂 Architecture & Technical Documentation:** [https://durgesh261.github.io/EcoSched/docs.html](https://durgesh261.github.io/EcoSched/docs.html)
 
 ---
