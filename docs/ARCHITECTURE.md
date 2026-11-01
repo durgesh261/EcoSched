@@ -38,7 +38,7 @@ EcoSched/
 │   │   ├── scenarios.py            # Stress test scenario definitions (Nominal, Tight SLA, Contention)
 │   │   └── runner.py               # Automated evaluation orchestrator
 │   └── visualization/
-│       └── plotter.py              # IEEE/ACM styled publication figure generator (300 DPI)
+│       └── plotter.py              # Benchmark figure and telemetry visualization generator (300 DPI)
 ├── scripts/
 │   ├── generate_sample_data.py     # Deterministic trace dataset generator
 │   └── run_experiments.py          # Master benchmark execution and figure generation script

@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/badge/tests-5%20passed-brightgreen.svg)]()
-[![Code Style: Academic](https://img.shields.io/badge/code%20style-IEEE%2FACM%20Research-purple.svg)]()
+[![Code Style: Clean](https://img.shields.io/badge/code%20style-PEP%208%20%2F%20Black-000000.svg)]()
 [![Docker](https://img.shields.io/badge/docker-ready-blue.svg)]()
 [![Digital Twin](https://img.shields.io/badge/Interactive-Digital%20Twin-10b981.svg)](https://durgesh261.github.io/EcoSched/)
 
@@ -145,7 +145,7 @@ pytest -v
 ```bash
 python scripts/run_experiments.py
 ```
-All publication-quality plots (PNG, 300 DPI) are automatically exported to `output/figures/` and tabular summaries to `output/results/`.
+All high-resolution benchmark plots (PNG, 300 DPI) are automatically exported to `output/figures/` and tabular summaries to `output/results/`.
 
 ---
 
@@ -177,19 +177,3 @@ Please refer to [`docs/MATHEMATICAL_FORMULATION.md`](docs/MATHEMATICAL_FORMULATI
 ## 📄 License
 
 This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
-
----
-
-## 📑 Citation & Academic Attribution
-
-If you use EcoSched in your academic research, please cite:
-
-```bibtex
-@article{kanjariya2026ecosched,
-  title={EcoSched: Carbon-Aware Workload Orchestration and Dynamic Slack Shifting for Geo-Distributed Compute Clusters},
-  author={Kanjariya, Durgesh},
-  year={2026},
-  journal={Technical Report and Simulation Framework},
-  url={https://github.com/durgesh261/EcoSched}
-}
-```

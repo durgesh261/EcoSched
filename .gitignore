@@ -39,7 +39,7 @@ data/results/
 output/
 figures/*.pdf
 
-# Private Research Paper Drafts (Kept local, never public on Git)
+# Local Private Directory
 paper/
 *.tex
 *.bib

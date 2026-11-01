@@ -13,7 +13,7 @@ if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
 
 from src.benchmark.runner import BenchmarkRunner
-from src.visualization.plotter import PublicationPlotter
+from src.visualization.plotter import BenchmarkPlotter
 from scripts.generate_sample_data import generate_carbon_traces, generate_workload_traces
 
 
@@ -49,11 +49,11 @@ def main():
 
     results = runner.run_all()
 
-    # 3. Generate publication-ready figures
+    # 3. Generate high-resolution benchmark figures
     print("\n--------------------------------------------------------------------------------")
-    print("            Generating Publication-Quality Figures (IEEE / ACM Style)")
+    print("            Generating High-Resolution Benchmark Figures (300 DPI)")
     print("--------------------------------------------------------------------------------")
-    plotter = PublicationPlotter(output_dir=figures_dir)
+    plotter = BenchmarkPlotter(output_dir=figures_dir)
 
     plotter.plot_grid_carbon_traces(grid_csv)
     plotter.plot_cumulative_carbon_emissions(results_dir, scenario_name="Nominal_Workload")

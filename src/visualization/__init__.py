@@ -1,7 +1,7 @@
 """
-Publication-ready plotting and visualization suite.
+Plotting and visualization suite for simulation benchmarks.
 """
 
-from .plotter import PublicationPlotter
+from .plotter import BenchmarkPlotter
 
-__all__ = ["PublicationPlotter"]
+__all__ = ["BenchmarkPlotter"]

@@ -1,5 +1,5 @@
 """
-Publication-ready visualization generator producing IEEE/ACM styled figures for technical reports.
+High-resolution visualization generator producing benchmark figures for system performance analysis.
 """
 
 import os
@@ -9,7 +9,7 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 
-# Apply clean academic styling
+# Apply clean visualization styling
 plt.rcParams.update({
     "font.size": 11,
     "font.family": "sans-serif",
@@ -26,9 +26,9 @@ plt.rcParams.update({
 })
 
 
-class PublicationPlotter:
+class BenchmarkPlotter:
     """
-    Generates high-resolution academic charts from benchmark telemetry.
+    Generates high-resolution benchmark charts from simulation telemetry.
     """
 
     def __init__(self, output_dir: str):
